@@ -49,7 +49,7 @@
       const pageSize = await getPageSize();
       const provData = [];
       const response = await fetch(`${BASE_URL}/get-province-all?page=4`);
-      Promise.all(
+      const allData = await Promise.all(
         Array(pageSize)
           .fill(null)
           .map((_, index) =>
@@ -57,13 +57,18 @@
               (res) => res.json()
             )
           )
-      ).then((res) => {
-        provData.push(res);
-        res.forEach((d) => {
-          console.log(d);
-          L.geoJSON(d.provFeature).addTo(map);
-        });
+      );
+      for (r of allData) {
+        provData.push(...r);
+      }
+
+      console.log(provData);
+
+      const prov = provData.find((d) => {
+        L.geoJSON(d.provFeature).addTo(map);
       });
+
+      return prov;
     }
 
     getProvinces();

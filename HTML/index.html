@@ -58,8 +58,9 @@
             )
           )
       );
-      for (r of allData) {
-        provData.push(...r);
+      const mixData = allData.flat();
+      for (r of mixData) {
+        provData.push(r);
       }
 
       console.log(provData);

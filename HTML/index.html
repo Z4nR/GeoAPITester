@@ -48,7 +48,6 @@
     async function getProvinces() {
       const pageSize = await getPageSize();
       const provData = [];
-      const response = await fetch(`${BASE_URL}/get-province-all?page=4`);
       const allData = await Promise.all(
         Array(pageSize)
           .fill(null)
@@ -63,7 +62,15 @@
         provData.push(r);
       }
 
-      console.log(provData);
+      // const testing = await fetch(
+      //   `http://localhost:3000/v1/get-cities-all?page=52`
+      // ).then((res) => res.json());
+
+      // console.log(testing);
+
+      // const prov = testing.find((d) => {
+      //   L.geoJSON(d.cityFeature).addTo(map);
+      // });
 
       const prov = provData.find((d) => {
         L.geoJSON(d.provFeature).addTo(map);

@@ -22,19 +22,13 @@
   ></script>
   <script>
     const map = L.map("map").setView([-1.2480891, 115.419], 5);
-    L.tileLayer(
-      "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-      {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: "mapbox/streets-v11",
-        tileSize: 512,
-        zoomOffset: -1,
-        accessToken:
-          "pk.eyJ1IjoiejRuciIsImEiOiJja2pzand4cW4xMm45Mnl0Y2RvdjJtZHYxIn0.Rn_hw5jHlwnMJ5BVcQ8egg",
-      }
-    ).addTo(map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      tileSize: 512,
+      zoomOffset: -1,
+    }).addTo(map);
 
     const BASE_URL = "https://brainy-rose-rugby-shirt.cyclic.app/v1";
 

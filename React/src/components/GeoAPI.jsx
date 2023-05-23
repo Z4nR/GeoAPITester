@@ -5,32 +5,32 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 export default function GeoAPI() {
   const [getData, setData] = useState(null);
 
-  useEffect(() => {
-    const totalPage = async () => {
-      const response = await totalPageProv();
-      const pageSize = response.data.totalPage;
-      return pageSize;
-    };
+  // useEffect(() => {
+  //   const totalPage = async () => {
+  //     const response = await totalPageProv();
+  //     const pageSize = response.data.totalPage;
+  //     return pageSize;
+  //   };
 
-    const getDataProv = async () => {
-      const pageSize = await totalPage();
+  //   const getDataProv = async () => {
+  //     const pageSize = await totalPage();
 
-      Promise.all(
-        Array(pageSize)
-          .fill(null)
-          .map((_, index) => getProvData(index))
-      );
-    };
+  //     Promise.all(
+  //       Array(pageSize)
+  //         .fill(null)
+  //         .map((_, index) => getProvData(index))
+  //     );
+  //   };
 
-    getDataProv();
-  });
+  //   getDataProv();
+  // });
 
   return (
     <div>
       <MapContainer
         center={[-1.2480891, 115.419]}
         zoom={5}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

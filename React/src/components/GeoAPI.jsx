@@ -5,25 +5,31 @@ import { MapContainer, TileLayer, useMap } from "react-leaflet";
 export default function GeoAPI() {
   const [getData, setData] = useState(null);
 
-  // useEffect(() => {
-  //   const totalPage = async () => {
-  //     const response = await totalPageProv();
-  //     const pageSize = response.data.totalPage;
-  //     return pageSize;
-  //   };
+  useEffect(() => {
+    const totalPage = async () => {
+      const response = await totalPageProv();
+      const pageSize = response.data.totalPage;
+      return pageSize;
+    };
 
-  //   const getDataProv = async () => {
-  //     const pageSize = await totalPage();
+    const getDataProv = async () => {
+      const pageSize = await totalPage();
+      const provData = [];
 
-  //     Promise.all(
-  //       Array(pageSize)
-  //         .fill(null)
-  //         .map((_, index) => getProvData(index))
-  //     );
-  //   };
+      const fetchData = await Promise.all(
+        Array(pageSize)
+          .fill(null)
+          .map((_, index) => getProvData(index).then((data) => data.data))
+      );
 
-  //   getDataProv();
-  // });
+      const mixData = fetchData.flat();
+      provData.push(mixData);
+
+      return provData;
+    };
+
+    getDataProv();
+  });
 
   return (
     <div>

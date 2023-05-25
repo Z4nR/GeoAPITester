@@ -1,35 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { getProvData, totalPageProv } from "../utils/data-api";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
 export default function GeoAPI() {
-  const [getData, setData] = useState(null);
+  const [getTotalPage, setTotalPage] = useState(null);
+  const [getDataProv, setDataProv] = useState(null);
+  const [getFeature, setFeature] = useState(null);
 
   useEffect(() => {
-    const totalPage = async () => {
-      const response = await totalPageProv();
-      const pageSize = response.data.totalPage;
-      return pageSize;
-    };
+    totalPageProv().then((data) => {
+      const d = data.data;
+      const total = d.totalPage;
+      setTotalPage(total);
+    });
 
-    const getDataProv = async () => {
-      const pageSize = await totalPage();
-      const provData = [];
-
+    const getProv = async () => {
       const fetchData = await Promise.all(
-        Array(pageSize)
+        Array(getTotalPage)
           .fill(null)
           .map((_, index) => getProvData(index).then((data) => data.data))
       );
 
       const mixData = fetchData.flat();
-      provData.push(mixData);
-
-      return provData;
+      setDataProv(mixData);
     };
 
-    getDataProv();
-  });
+    getProv();
+  }, [getTotalPage]);
+
+  console.log(getDataProv);
+
+  if (getDataProv !== null) {
+    const geo = getDataProv.find((d) => {
+      const feature = d.provFeature;
+      return feature;
+    });
+
+    //console.log(geo);
+  }
 
   return (
     <div>
@@ -42,6 +50,7 @@ export default function GeoAPI() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <GeoJSON data={getFeature} />
       </MapContainer>
     </div>
   );

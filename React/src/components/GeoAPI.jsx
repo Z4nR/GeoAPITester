@@ -25,19 +25,15 @@ export default function GeoAPI() {
       setDataProv(mixData);
     };
 
+    if (getDataProv !== null) {
+      getDataProv.find((d) => {
+        const feature = d.provFeature;
+        setFeature(feature);
+      });
+    }
+
     getProv();
-  }, [getTotalPage]);
-
-  console.log(getDataProv);
-
-  if (getDataProv !== null) {
-    const geo = getDataProv.find((d) => {
-      const feature = d.provFeature;
-      return feature;
-    });
-
-    //console.log(geo);
-  }
+  }, [getTotalPage, getDataProv]);
 
   return (
     <div>
@@ -50,7 +46,7 @@ export default function GeoAPI() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <GeoJSON data={getFeature} />
+        {getFeature !== null && <GeoJSON data={getFeature} />}
       </MapContainer>
     </div>
   );

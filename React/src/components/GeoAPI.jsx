@@ -35,6 +35,8 @@ export default function GeoAPI() {
     getProv();
   }, [getTotalPage, getDataProv]);
 
+  console.log(getFeature);
+
   return (
     <div>
       <MapContainer

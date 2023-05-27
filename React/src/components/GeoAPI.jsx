@@ -14,28 +14,25 @@ export default function GeoAPI() {
       setTotalPage(total);
     });
 
-    const getProv = async () => {
-      const fetchData = await Promise.all(
-        Array(getTotalPage)
-          .fill(null)
-          .map((_, index) => getProvData(index).then((data) => data.data))
-      );
-
-      const mixData = fetchData.flat();
-      setDataProv(mixData);
-    };
+    const mixData = [];
+    for (let i = 0; i < getTotalPage; i += 3) {
+      const fetchData = Array(4)
+        .fill(null)
+        .map((_, index) => {
+          console.log(index);
+          getProvData(index).then((data) => data.data);
+        });
+      mixData.push(fetchData);
+    }
+    setDataProv(mixData);
 
     if (getDataProv !== null) {
       getDataProv.find((d) => {
+        console.log(d);
         const feature = d.provFeature;
-        setFeature(feature);
       });
     }
-
-    getProv();
-  }, [getTotalPage, getDataProv]);
-
-  console.log(getFeature);
+  }, [getTotalPage]);
 
   return (
     <div>

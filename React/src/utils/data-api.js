@@ -9,7 +9,7 @@ async function totalPageProv() {
 
 async function getProvData(pageNumber) {
   const response = await fetch(
-    `${BASE_URL}/get-province-all?page=${pageNumber + 1}`
+    `${BASE_URL}/get-province-all?page=${pageNumber}`
   );
   const responseJson = await response.json();
 

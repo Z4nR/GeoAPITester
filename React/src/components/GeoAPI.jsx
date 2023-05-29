@@ -25,10 +25,13 @@ export default function GeoAPI() {
       const fetchData = Array(dataSize)
         .fill(null)
         .map((_, index) => {
-          getProvData(i + index).then((data) => data.data);
+          getProvData(i + index).then((data) => {
+            console.log(data.data);
+            data.data;
+          });
         });
 
-      console.log(fetchData);
+      console.log(dataSize);
       i += dataSize;
     }
 

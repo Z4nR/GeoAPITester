@@ -15,28 +15,29 @@ export default function GeoAPI() {
     });
 
     let i = 1;
-    let batchSize = 5;
+    let batchSize = 3;
     while (i < getTotalPage) {
       let dataSize = batchSize;
       if (i + batchSize > getTotalPage) {
         dataSize = getTotalPage - i + 1;
       }
 
-      const fetchData = Array(dataSize)
-        .fill(null)
-        .map((_, index) => {
-          getProvData(i + index).then((data) => {
-            console.log(data.data);
-            data.data;
-          });
-        });
+      const fetchData = async () => {
+        const data = await Promise.all(
+          Array(dataSize)
+            .fill(null)
+            .map((_, index) =>
+              getProvData(i + index).then((data) => {
+                return data.data;
+              })
+            )
+        );
+        return data;
+      };
 
-      console.log(dataSize);
+      console.log(fetchData());
       i += dataSize;
     }
-
-    // mixData.push(fetchData);
-    // setDataProv(mixData);
 
     if (getDataProv !== null) {
       getDataProv.find((d) => {

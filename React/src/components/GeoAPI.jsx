@@ -42,7 +42,6 @@ export default function GeoAPI() {
       }
 
       const mergeArray = mixData.flat();
-
       setDataProv(mergeArray);
     };
 
@@ -50,17 +49,15 @@ export default function GeoAPI() {
   }, [getTotalPage]);
 
   useEffect(() => {
-    console.log(getDataProv);
-
-    if (getDataProv !== null) {
+    const featureData = [];
+    if (!!getDataProv) {
       getDataProv.find((d) => {
         const feature = d.provFeature;
-        setFeature(feature);
+        featureData.push(feature);
       });
     }
+    setFeature(featureData);
   }, [getDataProv]);
-
-  console.log(getFeature);
 
   return (
     <div>
@@ -69,7 +66,9 @@ export default function GeoAPI() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {getFeature !== null && <GeoJSON data={getFeature} />}
+        {getFeature?.map((item) => (
+          <GeoJSON data={item} />
+        ))}
       </MapContainer>
     </div>
   );
